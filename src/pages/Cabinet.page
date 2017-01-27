@@ -1,0 +1,99 @@
+<apex:page standardController="Medicine__c" extensions="Cabinet_Extentison" recordSetVar="medicine" docType="html-5.0" standardStylesheets="false" showHeader="false" sidebar="false">
+    <head>
+        <title>Medicine Cabinet</title>
+        <!--stylesheets-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" type="text/css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"/>
+    </head>
+    <body>
+          <!--Parallax container-->
+        <div class="parallax-container">
+            <div id="index-banner">
+                <div class="section no-pad-bot">
+                    <div class="container">
+                        <h2 class="header center white-text text-accent-4">Medicine Cabinet</h2>
+                        <div class="row center">
+                            <h5 class="header col s12 light white-text">by Jules Gribble</h5>
+                        </div>
+                          <div class="row">
+      <div class="col s12 m12" style="color:black;padding-bottom:30px;">
+        <div class="card-panel ">
+              <!--apex form to input data-->
+            <apex:form >
+                <apex:inputField value="{!medi.name}"/>
+                <apex:inputField value="{!medi.Replace_At__c}" type="date" html-class="datepicker"/>
+                <apex:inputText value="{!medi.Dosage__c}"/>
+                <apex:commandButton style="color:black;" value="Save" action="{!save}"/>
+            </apex:form>
+            
+        </div>
+      </div>
+    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parallax">
+                <!--Paralax class will give the image a paralax effect-->
+                <apex:image value="http://www.thainink.co.uk/images/banner_web.jpg"/>
+            </div>
+        </div>
+        <div style="padding:10px;" class="container">
+            <h1>
+                Your Medicine 
+            </h1>
+            <div class="row">
+                  <!--Repeat over all medicines and if it is 7 days or less until replace date then render with replace chip and red text-->
+                <apex:repeat value="{!medicine}" var="med">
+                    <apex:outputPanel rendered="{!(ABS(med.Replace_At__c - TODAY()) <= 7)}">
+                        <div class="col s12 m5" >
+                            <div class="card-panel" id="{!med.name}" style="">
+                               <div class="chip">{!med.Replace_At__c - TODAY()} Days left</div>
+                                <div class="chip red">Replace</div>
+                                <h3 style="color:red;">
+                                    {!med.name}
+                                </h3>
+                                <p>
+                                    Dosage: {!med.Dosage__c}
+                                </p>
+                                <p>
+                                    Replace at: <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!med.Replace_At__c}" /> </apex:outputText>     
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!NOT(ABS(med.Replace_At__c - TODAY()) <= 7)}">
+                        <div class="col s12 m5" >
+                            <div class="card-panel" id="{!med.name}" style="">
+                                <div class="chip">{!med.Replace_At__c - TODAY()} Days left</div>
+                                <h3>
+                                    {!med.name}
+                                </h3>
+                                <p>
+                                    Dosage: {!med.Dosage__c}
+                                </p>
+                                <p>
+                                    Replace at: <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!med.Replace_At__c}" /> </apex:outputText>     
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </apex:repeat>   
+            </div>
+            
+        </div>
+    </body>
+    <!--Scripts-->
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+      <script> 
+     $(document).ready(function(){
+      $('.parallax').parallax();
+         $('.datepicker').pickadate({
+        format: 'dd/mm/yyyy'
+  });
+    });
+        </script>
+</apex:page>

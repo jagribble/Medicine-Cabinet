@@ -1,0 +1,17 @@
+{
+    "projectName": "Medicine Cabinet",
+    "username": "jules@lilly.com",
+    "id": "c0e243c0-e4e0-11e6-852d-e7423d5af763",
+    "namespace": "",
+    "orgType": "developer",
+    "loginUrl": "https://login.salesforce.com/",
+    "instanceUrl": "https://julesdev-dev-ed.my.salesforce.com",
+    "workspace": "/Users/C237546/Documents/Salesforce",
+    "subscription": [
+        "ApexClass",
+        "ApexComponent",
+        "ApexPage",
+        "ApexTrigger",
+        "StaticResource"
+    ]
+}
